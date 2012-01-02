@@ -1,0 +1,7 @@
+.message
+    .side-data
+        .date= message.date.toDateString()
+        .author
+            | by #{message.author}
+    .content!= message.content
+    div(style="clear: both")
