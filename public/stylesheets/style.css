@@ -50,3 +50,6 @@ a {
 .message .side-data {
     float: right;
 }
+#task-create {
+    display: none;
+}
