@@ -1,12 +1,8 @@
 var mongoose = require('mongoose');
-var markdown = require('markdown');
+var markdown_parse = require('./utils').markdown_parse;
 var Schema = mongoose.Schema;
 
 mongoose.connect('mongodb://localhost/tracker');
-
-var markdown_parse = function(text) {
-    return markdown.markdown.toHTML(text);
-}
 
 var MessageSchema = new Schema({
     author: { "type": String, "default": "John Doe" },

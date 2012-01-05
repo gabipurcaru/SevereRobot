@@ -17,7 +17,7 @@ exports.index = function(req, res) {
 };
 
 exports.ajax = function(req, res) {
-    if(req.body.action == 'add') {
+    if(req.body.action == 'add_message') {
         message = new Message();
         message.content = req.body.content;
         message.date = new Date();
@@ -28,5 +28,7 @@ exports.ajax = function(req, res) {
                 res.send('OK');
             }
         });
+    } else if(req.body.action == 'add_task') {
+        res.send('Not Implemented');
     }
 }
