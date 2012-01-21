@@ -19,6 +19,8 @@ var get_task = function(id, template, callback) {
 
 exports.text_parse = function(text, callback) {
     text = markdown.toHTML(text);
+    text = text.replace(/^<p>/, '');
+    text = text.replace(/<\/p>$/, '');
     var template;
     async.series([
         function(callback) {

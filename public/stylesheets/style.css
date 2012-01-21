@@ -53,18 +53,21 @@ a {
 #task-create {
     display: none;
 }
-.task {
+.task-label {
     border: 1px solid green;
-    background-color: #fff;
-}
-.task .details {
-    display: none;
-}
-.task .id {
-    font-size: 16px;
-    font-weight: bolder;
+    background-color: #eee;
     color: green;
+    cursor:  pointer;
 }
-.task .id:before {
-    content: ">>> ";
+.task-label:before {
+    content: "\00BB";
+}
+.task-label:hover {
+    background-color: #ccc;
+}
+.task-details {
+    display: none;
+    position: absolute;
+    background-color: #aaa;
+    border: 3px solid green;
 }
