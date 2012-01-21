@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
-var markdown_parse = require('./utils').markdown_parse;
+var DB = require('./settings').DB;
+var text_parse = require('./utils').text_parse;
 var Schema = mongoose.Schema;
 
-mongoose.connect('mongodb://localhost/tracker');
+mongoose.connect(DB);
 
 var MessageSchema = new Schema({
     author: { "type": String, "default": "John Doe" },
-    date: { "type": Date, "default": new Date() },
-    content: { "type": String, "default": "o hai <br/> o hai </br> ooo haiaiiasdias </br></br> hai", "get": markdown_parse },
+    date: { "type": Date, "default": Date.now },
+    content: { "type": String },
 });
 var Message = mongoose.model('Message', MessageSchema);
 

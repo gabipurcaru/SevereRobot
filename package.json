@@ -7,5 +7,6 @@
     , "jade": ">= 0.0.1"
     , "mongoose": "> 0"
     , "markdown": "> 0"
+    , "async": "> 0.1"
   }
 }

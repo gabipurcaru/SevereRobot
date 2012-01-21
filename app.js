@@ -5,18 +5,19 @@
 
 var express = require('express');
 var routes  = require('./routes');
+var settings = require('./settings');
 
 var app = module.exports = express.createServer();
 
 // Configuration
 
 app.configure(function(){
-    app.set('views', __dirname + '/views');
+    app.set('views', settings.VIEWS);
     app.set('view engine', 'jade');
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
-    app.use(express.static(__dirname + '/public'));
+    app.use(express.static(settings.PUBLIC))
 });
 
 app.configure('development', function(){
@@ -32,5 +33,5 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.post('/ajax/', routes.ajax);
 
-app.listen(3000);
+app.listen(settings.PORT);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

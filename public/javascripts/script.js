@@ -17,9 +17,18 @@ $(function() {
             $('#task-create').dialog({modal: true});
         }
     });
-    $('#task-create').click(function() {
-        $.post('/ajax/', {action: 'add_task'}, function(response) {
+    $('#create-task').click(function() {
+        data = {
+            action: 'add_task',
+            content: $('#task-description').val(),
+            deadline: $('#task-deadline').val(),
+            assigned_to: $('#task-assigned-to').val()
+        };
+        $.post('/ajax/', data, function(response) {
             console.debug(response);
+            var original_value = $('#message-area').val();
+            $('#message-area').val(original_value.slice(0, -3) + '::' + response + '::');
+            $('#task-create').dialog('close');
         });
     });
 })
