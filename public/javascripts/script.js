@@ -31,4 +31,7 @@ $(function() {
             $('#task-create').dialog('close');
         });
     });
+    $('.task .id').on('click', function() {
+        $(this).siblings('.details').toggle();
+    });
 })

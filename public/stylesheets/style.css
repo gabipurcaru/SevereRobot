@@ -53,3 +53,18 @@ a {
 #task-create {
     display: none;
 }
+.task {
+    border: 1px solid green;
+    background-color: #fff;
+}
+.task .details {
+    display: none;
+}
+.task .id {
+    font-size: 16px;
+    font-weight: bolder;
+    color: green;
+}
+.task .id:before {
+    content: ">>> ";
+}
