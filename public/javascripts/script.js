@@ -7,27 +7,22 @@ $(function() {
             window.location.replace(window.location); // refresh
         });
     });
-    var tags = [
-        {label: '::1::', value: "::1::"}, 
-        {label: '::2::', value: "::2::"}
-    ];
     $('#message-area').bind('keyup', function(e) {
         var colon_key = 186; // the ":" key
         if(e.which != colon_key) {
             return true;
         }
         var latest_three = $(this).val().slice(-3);
-        var latest_two = latest_three.slice(-2);
         if(latest_three == ":::") {
             $('#task-create').dialog({modal: true});
-        } else if(latest_two == "::") {
-            
         }
     }).autocomplete({
         minLength: 2,
         delay: 0,
         source: function(request, response) {
-            response($.ui.autocomplete.filter(tags, request.term.slice(-2))); // auto suggest based on last 2 chars
+            $.post('/ajax/', {action: 'task_autosuggest_list'}, function(tags) {
+                response($.ui.autocomplete.filter(tags, request.term.slice(-2))); // auto suggest based on last 2 chars
+            }, "json");
         },
         select: function(event, ui) {
             var current_val = $('#message-area').val();
@@ -39,7 +34,9 @@ $(function() {
         focus: function(event, ui) {
             return false;       
         }
-    });
+    }).data("autocomplete")._renderItem = function(ul, item) {
+        return $('<li>').data("item.autocomplete", item).append("<a>" + item.desc + "</a>").appendTo(ul);
+    };
     $('#create-task').click(function() {
         data = {
             action: 'add_task',

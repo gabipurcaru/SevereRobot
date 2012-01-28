@@ -57,5 +57,15 @@ exports.ajax = function(req, res) {
             task.save();
             res.send(task.id);
         });
+    } else if(req.body.action == "task_autosuggest_list") {
+        Task.find({}, ['id'], {sort: {id: -1}}, function(err, docs) {
+            var items = docs.map(function(item) {
+                return {
+                    value: "::" + item.id + "::",
+                    desc: "#" + item.id + " - dummy text",
+                };
+            });
+            res.end(JSON.stringify(items));
+        });
     }
 }
