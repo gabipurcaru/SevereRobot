@@ -11,7 +11,7 @@ var async = require('async');
 var openid = require('openid');
 
 exports.index = function(req, res) {
-    if(!req.session || !req.session.user) {
+    if(!req.session.user) {
         res.redirect('/login/');
         return;
     }
