@@ -51,6 +51,9 @@ a {
 #task-create {
     display: none;
 }
+#tip {
+    font-size: 12px;
+}
 .task-label {
     cursor:  pointer;
     background-image: url(/images/label-default.png);
