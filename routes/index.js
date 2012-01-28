@@ -45,9 +45,6 @@ var extensions = [
         "http://axschema.org/namePerson/last": "required",
     }),
 ];
-var users = [
-    'gabi@purcaru.com',
-]
 var relyingParty = new openid.RelyingParty(settings.LOGIN_FULL_URL, null, false, false, extensions);
 exports.login = function(req, res) {
     relyingParty.verifyAssertion(req, function(error, result) {
@@ -62,7 +59,7 @@ exports.login = function(req, res) {
                 }
             });
         } else {
-            if(users.indexOf(result.email) !== -1) {
+            if(settings.USER_EMAILS.indexOf(result.email) !== -1) {
                 req.session.user = {
                     'email': result.email,
                     'name': result.firstname + ' ' + result.lastname,
