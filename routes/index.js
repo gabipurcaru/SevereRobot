@@ -11,9 +11,16 @@ var async = require('async');
 var openid = require('openid');
 
 exports.index = function(req, res) {
-    if(!req.session.user) {
-        res.redirect('/login/');
-        return;
+    if(!settings.SKIP_LOGIN) {
+        if(!req.session.user) {
+            res.redirect('/login/');
+            return;
+        }
+    } else {
+        req.session.user = {
+            email: "some@body.com",
+            name: "John Doe",
+        }
     }
     async.waterfall([
         function(callback) {

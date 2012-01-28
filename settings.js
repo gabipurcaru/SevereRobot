@@ -11,3 +11,4 @@ exports.USER_EMAILS = [
     'gabi@purcaru.com',
     'deemarklit@gmail.com',
 ];
+exports.SKIP_LOGIN = process.env.SKIP_LOGIN || true;
