@@ -6,9 +6,15 @@
 var Message = require('../messages').Message;
 var Task = require('../tasks').Task;
 var text_parse = require('../utils').text_parse;
+var settings = require('../settings');
 var async = require('async');
+var openid = require('openid');
 
 exports.index = function(req, res) {
+    if(!req.session || !req.session.user) {
+        res.redirect('/login/');
+        return;
+    }
     async.waterfall([
         function(callback) {
             Message.find({}, [], {sort: {date: -1}}, callback)
@@ -31,11 +37,50 @@ exports.index = function(req, res) {
     ]);
 };
 
+var extensions = [
+    new openid.UserInterface(),
+    new openid.AttributeExchange({
+        "http://axschema.org/contact/email": "required",
+        "http://axschema.org/namePerson/first": "required",
+        "http://axschema.org/namePerson/last": "required",
+    }),
+];
+var users = [
+    'gabi@purcaru.com',
+]
+var relyingParty = new openid.RelyingParty(settings.LOGIN_FULL_URL, null, false, false, extensions);
+exports.login = function(req, res) {
+    relyingParty.verifyAssertion(req, function(error, result) {
+        if(error || !result.authenticated) {
+            relyingParty.authenticate('https://www.google.com/accounts/o8/id', false, function(error, authUrl) {
+                if(error) {
+                    res.end('Error: ' + error);
+                } else if(!authUrl) {
+                    res.end('Authentication failed.');
+                } else {
+                    res.redirect(authUrl, 302);
+                }
+            });
+        } else {
+            if(users.indexOf(result.email) !== -1) {
+                req.session.user = {
+                    'email': result.email,
+                    'name': result.firstname + ' ' + result.lastname,
+                };
+                res.redirect('/');
+            } else {
+                res.end('You are not authorized.')
+            }
+        }
+    });
+}
+
 exports.ajax = function(req, res) {
     if(req.body.action == 'add_message') {
         message = new Message();
         message.content = req.body.content;
         message.date = new Date();
+        message.author = req.session.user.name;
         message.save(function(err) {
             if(err) {
                 res.send('Error occured.');
@@ -53,7 +98,7 @@ exports.ajax = function(req, res) {
             task.content = content;
             task.deadline = deadline;
             task.assigned_to = assigned_to;
-            task.author = "John Doe";
+            task.author = req.session.user.name;
             task.save();
             res.send(task.id);
         });
