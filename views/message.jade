@@ -1,6 +1,6 @@
 .message
     .side-data
-        .date= message.date.toDateString()
+        .date #{date_format(message.date)}
         .author
             | by #{message.author}
     .content!= message.content

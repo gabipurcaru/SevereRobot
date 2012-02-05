@@ -4,11 +4,13 @@
  */
 
 var Message = require('../messages').Message;
+var Comment = require('../comments').Comment;
 var Task = require('../tasks').Task;
-var text_parse = require('../utils').text_parse;
+var text_parse = require('../messages').text_parse;
 var settings = require('../settings');
 var async = require('async');
 var openid = require('openid');
+var utils = require('../utils');
 
 exports.index = function(req, res) {
     if(!settings.SKIP_LOGIN) {
@@ -39,6 +41,7 @@ exports.index = function(req, res) {
             res.render('index', {
                 title: 'Task Tracker',
                 messages: messages,
+                date_format: utils.date_format,
             });
         }
     ]);
@@ -81,7 +84,7 @@ exports.login = function(req, res) {
 
 exports.ajax = function(req, res) {
     if(req.body.action == 'add_message') {
-        message = new Message();
+        var message = new Message();
         message.content = req.body.content;
         message.date = new Date();
         message.author = req.session.user.name;
@@ -96,6 +99,7 @@ exports.ajax = function(req, res) {
         var content = req.body.content;
         var deadline = new Date(); //req.body.deadline;
         var assigned_to = req.body.assigned_to;
+        var title = req.body.title;
         Task.count({}, function(err, count) {
             var task = new Task();
             task.id = count+1;
@@ -103,18 +107,30 @@ exports.ajax = function(req, res) {
             task.deadline = deadline;
             task.assigned_to = assigned_to;
             task.author = req.session.user.name;
+            task.title = title;
             task.save();
             res.send(task.id);
         });
     } else if(req.body.action == "task_autosuggest_list") {
-        Task.find({}, ['id'], {sort: {id: -1}}, function(err, docs) {
+        Task.find({}, ['id', 'title'], {sort: {id: -1}}, function(err, docs) {
             var items = docs.map(function(item) {
                 return {
                     value: "::" + item.id + "::",
-                    desc: "#" + item.id + " - dummy text",
+                    desc: "#" + item.id + " - " + item.title,
                 };
             });
             res.end(JSON.stringify(items));
+        });
+    } else if(req.body.action == "add_comment") {
+        var comment = new Comment();
+        comment.author = req.session.user.name;
+        comment.content = req.body.comment;
+        comment.save(function(err, doc) {
+            if(!err && doc) {
+                Task.update({id: parseInt(req.body['task-id'])}, {$push: {comments: doc}}, function() {
+                    res.end("OK");
+                });
+            }
         });
     }
 }

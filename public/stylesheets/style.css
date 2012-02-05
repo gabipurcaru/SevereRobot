@@ -72,4 +72,8 @@ a {
     position: absolute;
     background-color: #aaa;
     border: 3px solid green;
+    min-width: 400px;
+}
+ul.comments, ul.comments li {
+    min-width: 300px;
 }

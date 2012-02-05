@@ -5,9 +5,10 @@
   , "dependencies": {
       "express": "2.5.4"
     , "jade": ">= 0.0.1"
-    , "mongoose": "> 0"
+    , "mongoose": "2.5.3"
     , "markdown": "> 0"
     , "async": "> 0.1"
     , "openid": ">= 0.3"
+    , "datejs": "0.0.2"
   }
 }

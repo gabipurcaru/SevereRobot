@@ -1,5 +1,4 @@
 $(function() {
-    $('button').button();
     $('#submit-message').click(function() {
         var content = $('#message-area').val();
         $.post('/ajax/', {action: 'add_message', content: content}, function() {
@@ -26,7 +25,6 @@ $(function() {
         },
         select: function(event, ui) {
             var current_val = $('#message-area').val();
-            console.log(current_val);
             var val = current_val.replace(/:*$/, '') + ui.item.value + ' ';
             $('#message-area').val(val);
             return false;
@@ -40,12 +38,12 @@ $(function() {
     $('#create-task').click(function() {
         data = {
             action: 'add_task',
+            title: $('#task-title').val(),
             content: $('#task-description').val(),
             deadline: $('#task-deadline').val(),
             assigned_to: $('#task-assigned-to').val()
         };
         $.post('/ajax/', data, function(response) {
-            console.debug(response);
             var original_value = $('#message-area').val();
             $('#message-area').val(original_value.slice(0, -3) + '::' + response + '::');
             $('#task-create').dialog('close');
@@ -55,5 +53,11 @@ $(function() {
         $(console.log(this));
         window.debug = this;
         $(this).next().toggle();
+    });
+    $('.add-comment').submit(function() {
+        var data = $(this).serialize() + "&action=add_comment";
+        $.post('/ajax/', data, function() {
+            window.location.replace(window.location);
+        });
     });
 })

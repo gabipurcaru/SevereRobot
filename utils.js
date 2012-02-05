@@ -2,49 +2,36 @@
  * Site-wide utilities.
  */
 
-var markdown = require('markdown').markdown;
-var jade = require('jade');
-var fs = require('fs');
-var settings = require('./settings');
-var Task = require('./tasks').Task;
-var async = require('async');
+require('datejs');
 
-var get_task = function(id, template, callback) {
-    Task.findOne({ 'id': parseInt(id) }, function(err, task) {
-        callback(jade.compile(template)({
-            'task': task,
-        }));
-    })
-}
-
-exports.text_parse = function(text, callback) {
-    text = markdown.toHTML(text);
-    text = text.replace(/^<p>/, '');
-    text = text.replace(/<\/p>$/, '');
-    var template;
-    async.series([
-        function(callback) {
-            fs.readFile(settings.VIEWS + '/task.jade', function(err, data) {
-                template = data;
-                callback(err);
-            });
-        }, function() {
-            var functions = [];
-            var regex = /::([0-9]+)::/;
-            async.whilst(function() {
-                    return regex.test(text);
-                }, function(callback) {
-                    var match = regex.exec(text);
-                    var tag = match[0];
-                    var id = match[1];
-                    get_task(id, template, function(task) {
-                        text = text.replace(tag, task);
-                        callback();
-                    });
-                }, function(err) {
-                    callback(text);
-                }
-            );
+exports.date_format = function(date) {
+    date = new Date(date);
+    var in_future = false;
+    if(date > Date.now()) {
+        in_future = true;
+    }
+    if(date.isToday()) {
+        var seconds = Math.abs((Date.now() - date) / 1000);
+        var formatted;
+        if(seconds < 60) {
+            formatted = parseInt(seconds) + " seconds";
+        } else if(seconds < 3600) {
+            formatted = parseInt(seconds/60) + " minutes";
+        } else {
+            formatted = parseInt(seconds/3600) + " hours";
         }
-    ]);
-}
+        if(in_future) {
+            return "in " + formatted;
+        } else {
+            return formatted + " ago";
+        }
+    } else if(date.isSameDay(Date.parse('yesterday'))) { 
+        return "yesterday at " + date.toString('HH:mm');
+    } else if(date.isSameDay(Date.parse('tomorrow'))) {
+        return "tomorrow at " + date.toString('HH:mm');
+    } else if(date.is().same().year()) {
+        return date.toString("MMMM dS") + " at " + date.toString("HH:mm")
+    } else {
+        return date.toString("MMMM dS, yyyy HH:mm");
+    }
+};
