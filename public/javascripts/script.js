@@ -50,9 +50,13 @@ $(function() {
         });
     });
     $('.task-label').on('click', function() {
-        $(console.log(this));
-        window.debug = this;
-        $(this).next().toggle();
+        var details = $(this).next();
+        var show = !details.is(':visible');
+        $('.task-details').stop().hide('fast', 'easeInCirc');
+        if(show) {
+            details.show('fast', 'easeOutCirc');
+            details.find('textarea').focus();
+        }
     });
     $('.change-status .status').on('change', function() {
         var data = {

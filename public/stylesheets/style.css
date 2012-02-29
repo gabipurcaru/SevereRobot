@@ -1,10 +1,14 @@
+@font-face {
+    font-family: "Ubuntu";
+    src: url('etc/Ubuntu.ttf');
+}
 body {
     padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 14px "Ubuntu", Helvetica, Arial, sans-serif;
 }
 
 html {
-    background-color: #cfcfcf;
+    background-color: #efefef;
 }
 
 a {
@@ -32,8 +36,9 @@ a {
 }
 .message {
     width: 100%;
-    border: 1px solid #c0c0c0;
-    margin-top: 5px;
+    border-top: 2px dotted #c0c0c0;
+    margin-top: 15px;
+    padding: 5px;
 }
 .message .title {
     float: left;
@@ -62,6 +67,7 @@ a {
     display: inline-block;
     font-size: 12px;
     text-align: center;
+    font-weight: bolder;
 }
 .task-label.active {
     background-image: url(/images/label-active.png);
@@ -93,13 +99,80 @@ a {
 .task-label.duplicate:hover {
     background-image: url(/images/label-duplicate-hover.png);
 }
+
 .task-details {
     display: none;
     position: absolute;
-    background-color: #aaa;
-    border: 3px solid green;
+    background-color: #fafafa; 
+    border: 5px solid #ddd;
     min-width: 400px;
+    max-width: 600px;
+    padding: 5px;
 }
-ul.comments, ul.comments li {
-    min-width: 300px;
+.task-details > .name {
+    font-size: 20px;
+}
+.task-details > .date {
+    font-style: oblique;
+    margin-bottom: 12px;
+    font-size: 10px;
+}
+.task-details > .content {
+    display: block;
+    margin-bottom: 12px;
+    width: 100%;
+    background-color: #f0f0f0;
+}
+.task-details ul.comments {
+    padding: 0;
+}
+.task-details .comments li {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    display: inline-block;
+    margin-left: 6px;
+}
+
+.task-details .comments li .author {
+    font-size: 10px;
+    font-weight: bold;
+    color: #888;
+    line-height: 90%;
+}
+.task-details .comments li .date {
+    font-size: 10px;
+    font-style: oblique;
+    font-weight: lighter;
+    color: #888;
+    line-height: 90%;
+}
+.task-details .comments li .content {
+    font-size: 14px;
+    margin-top: 2px;
+}
+.task-details .comments li {
+    margin-bottom: 14px;
+    padding-left: 4px;
+    border-left: 2px solid #eee;
+}
+.task-details .add-comment {
+    margin-left: 10px;
+}
+.task-details .add-comment textarea {
+    width: 60%;
+    min-height: 70px;
+    border: 2px solid #ddd;
+}
+.task-details .add-comment .submit {
+    padding: 3px 6px;
+}
+.task-details .change-status {
+    margin: 6px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.task-details .change-status:before {
+    content: "»";
 }
