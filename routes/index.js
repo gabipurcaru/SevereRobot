@@ -6,6 +6,8 @@
 var Message = require('../messages').Message;
 var Comment = require('../comments').Comment;
 var Task = require('../tasks').Task;
+var TaskStatus = require('../tasks').TaskStatus;
+var get_task_status_name = require('../tasks').get_task_status_name;
 var text_parse = require('../messages').text_parse;
 var settings = require('../settings');
 var async = require('async');
@@ -26,7 +28,7 @@ exports.index = function(req, res) {
     }
     async.waterfall([
         function(callback) {
-            Message.find({}, [], {sort: {date: -1}}, callback)
+            Message.find({}, [], {sort: {date: -1}}, callback);
         },
         function(messages, callback) {
             async.mapSeries(messages, function(message, callback) {
@@ -42,6 +44,8 @@ exports.index = function(req, res) {
                 title: 'Task Tracker',
                 messages: messages,
                 date_format: utils.date_format,
+                TaskStatus: TaskStatus,
+                get_task_status_name: get_task_status_name,
             });
         }
     ]);
@@ -131,6 +135,10 @@ exports.ajax = function(req, res) {
                     res.end("OK");
                 });
             }
+        });
+    } else if(req.body.action == "change_status") {
+        Task.update({id: parseInt(req.body['task-id'])}, {status: req.body.status}, function() {
+            res.end('OK');
         });
     }
 }

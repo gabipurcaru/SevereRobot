@@ -56,7 +56,6 @@ a {
 }
 .task-label {
     cursor:  pointer;
-    background-image: url(/images/label-default.png);
     width: 49px;
     height: 16px;
     overflow: hidden;
@@ -64,8 +63,35 @@ a {
     font-size: 12px;
     text-align: center;
 }
-.task-label:hover {
-    background-image: url(/images/label-default-hover.png);
+.task-label.active {
+    background-image: url(/images/label-active.png);
+}
+.task-label.active:hover {
+    background-image: url(/images/label-active-hover.png);
+}
+.task-label.finished {
+    background-image: url(/images/label-finished.png);
+}
+.task-label.finished:hover {
+    background-image: url(/images/label-finished-hover.png);
+}
+.task-label.closed {
+    background-image: url(/images/label-closed.png);
+}
+.task-label.closed:hover {
+    background-image: url(/images/label-closed-hover.png);
+}
+.task-label.wontfix {
+    background-image: url(/images/label-wontfix.png);
+}
+.task-label.wontfix:hover {
+    background-image: url(/images/label-wontfix-hover.png);
+}
+.task-label.duplicate {
+    background-image: url(/images/label-duplicate.png);
+}
+.task-label.duplicate:hover {
+    background-image: url(/images/label-duplicate-hover.png);
 }
 .task-details {
     display: none;

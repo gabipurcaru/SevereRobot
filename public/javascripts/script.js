@@ -54,6 +54,16 @@ $(function() {
         window.debug = this;
         $(this).next().toggle();
     });
+    $('.change-status .status').on('change', function() {
+        var data = {
+            'action': 'change_status',
+        }
+        var data = $(this).parents('.change-status:first').serialize();
+        data = data + '&action=change_status';
+        $.post('/ajax/', data, function() {
+            window.location.replace(window.location);
+        });
+    });
     $('.add-comment').submit(function() {
         var data = $(this).serialize() + "&action=add_comment";
         $.post('/ajax/', data, function() {

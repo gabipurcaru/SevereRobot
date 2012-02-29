@@ -1,4 +1,4 @@
-span.task-label= task.id
+span(class=get_task_status_name(task.status).toLowerCase() + " task-label")= task.id
 .task-details
     .id= task.id
     .date #{date_format(task.date)}
@@ -9,6 +9,15 @@ span.task-label= task.id
                 .author= comment.author
                 .date #{date_format(comment.date)}
                 .content= comment.content
+    form.change-status
+        p= task.status
+        input(type="hidden", name="task-id", value=task.id)
+        select(name="status").status
+            each id, name in TaskStatus
+                if id == task.status
+                    option(value=id, selected="selected")= name
+                else
+                    option(value=id)= name
     form.add-comment
         input(type="hidden", name="task-id", value=task.id)
         textarea(name="comment").text

@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var DB = require('./settings').DB;
 var utils = require('./utils');
-var Task = require('./tasks').Task;
+var tasks = require('./tasks');
+var Task = tasks.Task;
 var markdown = require('markdown').markdown;
 var fs = require('fs');
 var jade = require('jade');
@@ -27,6 +28,7 @@ var get_task = function(id, template, callback) {
             callback(jade.compile(template)({
                 'task': task,
                 'date_format': utils.date_format,
+                'get_task_status_name': tasks.get_task_status_name, 
             }));
         } else {
             callback("");
