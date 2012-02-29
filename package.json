@@ -9,6 +9,6 @@
     , "markdown": "> 0"
     , "async": "> 0.1"
     , "openid": ">= 0.3"
-    , "datejs": "0.0.2"
+    , "datejs": ">=0.0.2"
   }
 }
