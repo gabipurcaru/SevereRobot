@@ -3,7 +3,7 @@
         .task
             .banner
                 .title
-                    span.id= "#" + task.id
+                    span(class=get_task_status_name(task.status).toLowerCase() + ' id')= "#" + task.id
                     span.title= task.title
                 .right
                     .author= task.author
@@ -16,4 +16,16 @@
                             .author= comment.author
                             .date= date_format(comment.date)
                             .content= comment.content
-
+                form.add-comment
+                    input(type="hidden", name="task-id", value=task.id)
+                    textarea(name="comment").text
+                    br
+                    input(type="submit", value="Add Comment").submit
+                form.change-status
+                    input(type="hidden", name="task-id", value=task.id)
+                    select(name="status").status
+                        each id, name in TaskStatus
+                            if id == task.status
+                                option(value=id, selected)= name
+                            else
+                                option(value=id)= name

@@ -21,7 +21,7 @@ div.task-details
         select(name="status").status
             each id, name in TaskStatus
                 if id == task.status
-                    option(value=id, selected="selected")= name
+                    option(value=id, selected)= name
                 else
                     option(value=id)= name
 div.task-preview= task.title

@@ -205,6 +205,7 @@ a {
     margin-bottom: 2px;
     padding: 10px;
     background-color: #ececec;
+    position: relative;
 }
 .task-view-page .task:hover {
     background-color: #eaeaea;
@@ -218,6 +219,24 @@ a {
 }
 .task-view-page .task .title .id {
     font-weight: bold;
+    border-radius: 3px;
+    padding: 2px;
+}
+.task-view-page .task .title .id.active {
+    background-color: #627112;
+    color: #eee;
+}
+.task-view-page .task .title .id.finished {
+    background-color: #1a71a1;
+}
+.task-view-page .task .title .id.closed {
+    background-color: #f28d10;
+}
+.task-view-page .task .title .id.duplicate {
+    background-color: #9f1421;
+}
+.task-view-page .task .title .id.wontfix {
+    background-color: #f1890e;
 }
 .task-view-page .task .right {
     display: table-cell;
@@ -260,4 +279,19 @@ a {
     font-weight: lighter;
     color: #888;
     line-height: 90%;
+}
+.task-view-page .task .add-comment textarea {
+    width: 30%;
+    min-height: 70px;
+    border: 2px solid #ddd;
+}
+.task-view-page .task .add-comment {
+    margin: 10px;
+}
+.task-view-page .task .change-status {
+    margin: 6px;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    display: none;
 }

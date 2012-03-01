@@ -89,11 +89,12 @@ $(function() {
     });
 
     // task view page
-    $('.task-view-page .task').click(function() {
-        var data = $(this).find('.data');
-        window.debug = data;
+    $('.task-view-page .task .banner').click(function() {
+        var data = $(this).siblings('.data');
+        data.find('.change-status').toggle();
         if(data.height() == 0) {
             data.height('100%');
+            data.find('textarea').focus();
         } else {
             data.animate({height: 0}, 'fast');
         }

@@ -49,7 +49,8 @@ exports.tasks = function(req, res) {
             res.render('tasks', {
                 title: 'Task Tracker | Task View',
                 tasks: tasks,
-                date_format: utils.date_format
+                date_format: utils.date_format,
+                get_task_status_name: get_task_status_name
             });           
         }
     ]);
