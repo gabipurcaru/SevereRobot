@@ -6,6 +6,7 @@
 var express = require('express');
 var routes  = require('./routes');
 var settings = require('./settings');
+var middleware = require('./middleware');
 
 var app = module.exports = express.createServer();
 
@@ -32,7 +33,8 @@ app.configure('production', function() {
 
 // Routes
 
-app.get('/', routes.index);
+app.get('/', middleware.set_user, routes.index);
+app.get('/tasks/', middleware.set_user, routes.tasks);
 app.post('/ajax/', routes.ajax);
 app.get('/login/', routes.login);
 

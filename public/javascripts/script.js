@@ -20,7 +20,8 @@ $(function() {
         delay: 0,
         source: function(request, response) {
             $.post('/ajax/', {action: 'task_autosuggest_list'}, function(tags) {
-                response($.ui.autocomplete.filter(tags, request.term.slice(-2))); // auto suggest based on last 2 chars
+                // auto suggest based on last 2 chars
+                response($.ui.autocomplete.filter(tags, request.term.slice(-2))); 
             }, "json");
         },
         select: function(event, ui) {
@@ -33,7 +34,8 @@ $(function() {
             return false;       
         }
     }).data("autocomplete")._renderItem = function(ul, item) {
-        return $('<li>').data("item.autocomplete", item).append("<a>" + item.desc + "</a>").appendTo(ul);
+        return $('<li>').data("item.autocomplete", item) 
+            .append("<a>" + item.desc + "</a>").appendTo(ul);
     };
     $('#create-task').click(function() {
         data = {
@@ -45,10 +47,19 @@ $(function() {
         };
         $.post('/ajax/', data, function(response) {
             var original_value = $('#message-area').val();
-            $('#message-area').val(original_value.slice(0, -3) + '::' + response + '::');
+            $('#message-area').val(original_value.slice(0, -3) 
+                                   + '::' + response + '::');
             $('#task-create').dialog('close');
         });
     });
+    $('.task-label').on('hover', function(e) {
+        var preview = $(this).next().next();
+        preview.toggle();
+        preview.offset({
+            'top': e.pageY+10,
+            'left': e.pageX-10
+        });
+    })
     $('.task-label').on('click', function() {
         var details = $(this).next();
         var show = !details.is(':visible');

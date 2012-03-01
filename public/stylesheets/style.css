@@ -1,10 +1,10 @@
 @font-face {
     font-family: "Ubuntu";
-    src: url('etc/Ubuntu.ttf');
+    src: url('/etc/Ubuntu-R.ttf');
 }
 body {
     padding: 50px;
-    font: 14px "Ubuntu", Helvetica, Arial, sans-serif;
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 html {
@@ -14,7 +14,6 @@ html {
 a {
   color: #00B7FF;
 }
-
 #main-container {
     width: 960px;
     margin: 0 auto;
@@ -33,6 +32,20 @@ a {
     position: absolute;
     right: 15px;
     top: 15px;
+}
+.links {
+    text-align: center;
+}
+.links a {
+    margin: 20px;
+    font-size: x-large;
+    text-decoration: none;
+    color: navy;
+    border-bottom: 1px solid navy;
+}
+.links a:before {
+    content: "»";
+    color: black;
 }
 .message {
     width: 100%;
@@ -175,4 +188,14 @@ a {
 }
 .task-details .change-status:before {
     content: "»";
+}
+.task-preview {
+    display: none;
+    position: absolute;
+    padding: 5px;
+    background-color: #ddd;
+    border: 2px solid #eee;
+    font-style: bold;
+    border-radius: 8px;
+    z-index: 1000;
 }

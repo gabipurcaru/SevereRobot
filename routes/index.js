@@ -15,17 +15,6 @@ var openid = require('openid');
 var utils = require('../utils');
 
 exports.index = function(req, res) {
-    if(!settings.SKIP_LOGIN) {
-        if(!req.session.user) {
-            res.redirect('/login/');
-            return;
-        }
-    } else {
-        req.session.user = {
-            email: "some@body.com",
-            name: "John Doe",
-        }
-    }
     async.waterfall([
         function(callback) {
             Message.find({}, [], {sort: {date: -1}}, callback);
@@ -50,6 +39,12 @@ exports.index = function(req, res) {
         }
     ]);
 };
+
+exports.tasks = function(req, res) {
+    res.render('tasks', {
+        title: 'Task Tracker | Task View'
+    });
+}
 
 var extensions = [
     new openid.UserInterface(),

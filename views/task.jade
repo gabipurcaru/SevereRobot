@@ -1,5 +1,5 @@
-span(class=get_task_status_name(task.status).toLowerCase() + " task-label")= task.id
-.task-details
+span(class=get_task_status_name(task.status).toLowerCase() + " task-label", data-id=task.id)= '#' + task.id
+div.task-details
     .name= "#" + task.id + ": " + task.title
     .date #{date_format(task.date)}
     .content= task.content
@@ -24,3 +24,4 @@ span(class=get_task_status_name(task.status).toLowerCase() + " task-label")= tas
                     option(value=id, selected="selected")= name
                 else
                     option(value=id)= name
+div.task-preview= task.title
