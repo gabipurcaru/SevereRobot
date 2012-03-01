@@ -10,13 +10,13 @@ div.task-details
                 .date #{date_format(comment.date)}
                 .content= comment.content
     
-    form.add-comment
+    form.add-comment(method="post")
         input(type="hidden", name="task-id", value=task.id)
         textarea(name="comment").text
         br
         input(type="submit", value="Add Comment").submit
 
-    form.change-status
+    form.change-status(method="post")
         input(type="hidden", name="task-id", value=task.id)
         select(name="status").status
             each id, name in TaskStatus
@@ -24,4 +24,4 @@ div.task-details
                     option(value=id, selected)= name
                 else
                     option(value=id)= name
-div.task-preview= task.title
+div.task-preview= task.title + '  (' + get_task_status_name(task.status) + ')'

@@ -3,8 +3,9 @@ $(function() {
         var content = $('#message-area').val();
         $.post('/ajax/', {action: 'add_message', content: content}, function() {
             $('#message-area').val("");
-            window.location.replace(window.location); // refresh
+            window.location.replace(window.location.pathname); // refresh
         });
+        return false;
     });
     if($('#message-area').length) {
         $('#message-area').bind('keyup', function(e) {
@@ -78,14 +79,16 @@ $(function() {
         var data = $(this).parents('.change-status:first').serialize();
         data = data + '&action=change_status';
         $.post('/ajax/', data, function() {
-            window.location.replace(window.location);
+            window.location.replace(window.location.pathname);
         });
+        return false;
     });
     $('.add-comment').submit(function() {
         var data = $(this).serialize() + "&action=add_comment";
         $.post('/ajax/', data, function() {
-            window.location.replace(window.location);
+            window.location.replace(window.location.pathname);
         });
+        return false;
     });
 
     // task view page
