@@ -9,10 +9,6 @@ $(function() {
     });
     if($('#message-area').length) {
         $('#message-area').bind('keyup', function(e) {
-            var colon_key = 186; // the ":" key
-            if(e.which != colon_key) {
-                return true;
-            }
             var latest_three = $(this).val().slice(-3);
             if(latest_three == ":::") {
                 $('#task-create').dialog({modal: true});
