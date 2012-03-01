@@ -212,6 +212,7 @@ a {
 }
 .task-view-page .task .title {
     display: table-cell;
+    vertical-align: middle;
 }
 .task-view-page .task .title * {
     display: inline;
@@ -237,6 +238,11 @@ a {
 }
 .task-view-page .task .title .id.wontfix {
     background-color: #f1890e;
+}
+.task-view-page .title {
+    font-size: 16px;
+    font-family: Arial;
+    font-weight: 600;
 }
 .task-view-page .task .right {
     display: table-cell;
