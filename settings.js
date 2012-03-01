@@ -16,4 +16,9 @@ exports.USER_EMAILS = [
     'gabi@purcaru.com',
     'deemarklit@gmail.com',
 ];
-exports.SKIP_LOGIN = process.env.SKIP_LOGIN || true;
+if('SKIP_LOGIN' in process.env || !('MONGOLAB_URI' in process.env)) {
+    // skip login if on local server or explicitly set
+    exports.SKIP_LOGIN = true; 
+} else {
+    exports.SKIP_LOGIN = false;
+}
