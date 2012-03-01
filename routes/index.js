@@ -41,9 +41,18 @@ exports.index = function(req, res) {
 };
 
 exports.tasks = function(req, res) {
-    res.render('tasks', {
-        title: 'Task Tracker | Task View'
-    });
+    async.waterfall([
+        function(callback) {
+            Task.find({}, [], {sort: {"status": 1, date: -1}}).populate('comments', null, null, {sort: {date: 1}}).run(callback);
+        },
+        function(tasks, callback) {
+            res.render('tasks', {
+                title: 'Task Tracker | Task View',
+                tasks: tasks,
+                date_format: utils.date_format
+            });           
+        }
+    ]);
 }
 
 var extensions = [

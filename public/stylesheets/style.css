@@ -199,3 +199,65 @@ a {
     border-radius: 8px;
     z-index: 1000;
 }
+
+.task-view-page .task {
+    border: 1px solid #ddd;
+    margin-bottom: 2px;
+    padding: 10px;
+    background-color: #ececec;
+}
+.task-view-page .task:hover {
+    background-color: #eaeaea;
+}
+.task-view-page .task .title {
+    display: table-cell;
+}
+.task-view-page .task .title * {
+    display: inline;
+    margin-right: 3px;
+}
+.task-view-page .task .title .id {
+    font-weight: bold;
+}
+.task-view-page .task .right {
+    display: table-cell;
+    text-align: right;
+    line-height: 90%;
+}
+.task-view-page .task .banner {
+    width: 100%;
+    display: table;
+    cursor: pointer;
+}
+.task-view-page .task .data {
+    overflow: hidden;
+    height: 0;
+}
+.task-view-page .task .data > .content {
+    background-color: #ededed;
+    padding: 6px;
+    margin: 4px;
+}
+.task-view-page .task ul.comments {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+}
+.task-view-page .task ul.comments li {
+    border-left: 2px solid #ddd;
+    margin-top: 7px;
+}
+.task-view-page .task ul.comments li .author {
+    font-size: 10px;
+    font-weight: bold;
+    color: #888;
+    line-height: 90%;
+}
+.task-view-page .task ul.comments li .date {
+    font-size: 10px;
+    font-style: oblique;
+    font-weight: lighter;
+    color: #888;
+    line-height: 90%;
+}

@@ -1,0 +1,19 @@
+.task-view-page
+    each task in tasks
+        .task
+            .banner
+                .title
+                    span.id= "#" + task.id
+                    span.title= task.title
+                .right
+                    .author= task.author
+                    .date= date_format(task.date)
+            .data
+                .content= task.content
+                ul.comments
+                    each comment in task.comments
+                        li
+                            .author= comment.author
+                            .date= date_format(comment.date)
+                            .content= comment.content
+
