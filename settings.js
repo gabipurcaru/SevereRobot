@@ -3,7 +3,7 @@
  */
 
 exports.PORT = process.env.PORT || 3000;
-exports.DB = process.env.MONGOLAB_URI || 'mongodb://localhost/Tracker10';
+exports.DB = process.env.MONGOLAB_URI || 'mongodb://localhost/Tracker11';
 exports.VIEWS = __dirname + '/views';
 exports.PUBLIC = __dirname + '/public';
 
