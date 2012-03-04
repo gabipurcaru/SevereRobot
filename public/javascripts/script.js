@@ -15,8 +15,10 @@ $(function() {
                 var range = selection.getRangeAt(0);
                 var node = $('<span>');
                 range.insertNode(node[0]);
+                var offset = node.offset();
+                offset.left += 3;
                 $('#autosuggest').show();
-                $('#autosuggest').offset(node.offset());
+                $('#autosuggest').offset(offset);
                 node.remove();
             };
             return function() {
@@ -57,6 +59,25 @@ $(function() {
         });
         $('#message-area').bind('keydown', function(e) {
             var keycode = e.keyCode || e.which;
+            var backspace = 8;
+            var del = 46;
+            if(keycode != 8 && keycode != 46) {
+                return;
+            }
+            var selection = rangy.getSelection();
+            console.log(selection);
+            if((selection.anchorOffset || !selection.anchorNode.nodeValue) == 0 && keycode == backspace) {
+                console.debug(selection.anchorNode);
+                var previous = selection.anchorNode.previousSibling;
+                console.debug(previous);
+                previous.parentNode.removeChild(previous);
+            }
+        });
+        $('#message-area').bind('keydown', function(e) {
+            if($('#autosuggest').is(':hidden')) {
+                return;
+            }
+            var keycode = e.keyCode || e.which;
             var up_key = 38;
             var down_key = 40;
             var enter_key = 13;
@@ -65,21 +86,25 @@ $(function() {
             } else {
                 e.preventDefault();
                 if(keycode == enter_key) {
-                    var value = $('#autosuggest ul li.selected').data('val');
-                    var selection = window.getSelection();
-                    var offset = selection.focusOffset;
-                    var original_text = $('#message-area').text();
-                    var new_text = original_text.slice(0, offset) + value + original_text.slice(offset);
-                    var new_position = (original_text.slice(0, offset) + value).length;
-                    $('#message-area').text(new_text);
-                    var selection = window.getSelection();
-                    var range = document.createRange();
-                    var el = $('#message-area')[0];
-                    range.setStart(el, new_position-12);
-                    range.collapse(true);
+                    var value = $('#autosuggest ul li.selected').data('val').replace(/:/g, '');
+                    var selection = rangy.getSelection();
+                    var offset = selection.anchorOffset;
+                    var node = $('#message-area')[0];
+                    var new_element = $('<span contenteditable="false" class="task-label active">').html('#' + value);
+                    var text_before = document.createTextNode(selection.anchorNode.nodeValue.slice(0, offset-2));
+                    var text_after = document.createTextNode(selection.anchorNode.nodeValue.slice(offset));
+                    if(!text_after.nodeValue) {
+                        text_after = document.createTextNode(" ");
+                    }
+                    node.insertBefore(text_after, selection.anchorNode);
+                    node.insertBefore(text_before, text_after);
+                    node.insertBefore(new_element[0], text_after);
+                    node.removeChild(selection.anchorNode);
+                    var range = rangy.createRange();
+                    range.setStart(text_after, 0);
+                    range.setEnd(text_after, 0);
                     selection.removeAllRanges();
                     selection.addRange(range);
-                    hide_suggestion();
                     return;
                 }
                 if(keycode == up_key) {
